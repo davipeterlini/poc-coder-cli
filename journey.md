@@ -37,6 +37,10 @@
             files.extend(os.path.join(root, f) for f in filenames)
         context["files"] = files
         return "\n".join(files)
-
+    - Agora preciso criar uma estrutura de provedor ou seja quero rodar minha aplicação apontando para um modelo local a partir do olhama
+      - Construção essa estrutura e classes para suportar isso
+- 16/03/2025
     - Ao abrir o CLI a função - scan_project deve ser executada
+    - Os comandos não estão sendo executados
 
+ 
