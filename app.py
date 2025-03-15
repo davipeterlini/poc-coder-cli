@@ -10,7 +10,6 @@ from rich.console import Console
 from rich.prompt import Prompt
 from rich.panel import Panel
 from rich.text import Text
-from anthropic import Anthropic, AnthropicError
 from dotenv import load_dotenv
 
 # Carregar variáveis de ambiente do arquivo .env.local
@@ -18,12 +17,6 @@ load_dotenv('.env.local')
 
 # Configuração inicial
 console = Console()
-api_key = os.getenv("ANTHROPIC_API_KEY")
-if not api_key:
-    console.print("[red]Erro: Chave da API do Anthropic não encontrada. Verifique o arquivo .env.local[/red]")
-    sys.exit(1)
-
-client = Anthropic(api_key=api_key)
 session = PromptSession(history=FileHistory(".cli_history"), multiline=False)
 context = {"project_dir": os.getcwd(), "previous_commands": [], "files": []}  # Contexto persistente
 
@@ -48,27 +41,45 @@ def scan_project():
     context["files"] = files
     return "\n".join(files)
 
-def process_command(command):
-    """Processa o comando do usuário e retorna a resposta da IA."""
-    try:
-        # Adiciona o comando ao contexto
-        context["previous_commands"].append(command)
-        
-        # Escaneia o projeto para obter a lista de arquivos
-        project_files = scan_project()
-        
-        # Monta o prompt com contexto
-        prompt = f"Diretório atual: {context['project_dir']}\nArquivos do projeto:\n{project_files}\nComandos anteriores: {context['previous_commands'][-3:]}\nComando atual: {command}"
-        
-        # Chama a API do Claude
-        response = client.messages.create(
-            model="claude-3-7-sonnet-20250219",
-            max_tokens=1000,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response.content[0].text  # Ajuste conforme a estrutura da resposta
-    except AnthropicError as e:
-        return f"Erro ao processar o comando: {str(e)}"
+class ModelProvider:
+    """Classe base para provedores de modelos."""
+    def process_command(self, command, context):
+        raise NotImplementedError("Subclasses devem implementar este método")
+
+class AnthropicProvider(ModelProvider):
+    """Provedor de modelo para a API do Anthropic."""
+    def __init__(self, api_key):
+        from anthropic import Anthropic, AnthropicError
+        self.client = Anthropic(api_key=api_key)
+        self.AnthropicError = AnthropicError
+
+    def process_command(self, command, context):
+        try:
+            # Adiciona o comando ao contexto
+            context["previous_commands"].append(command)
+            
+            # Escaneia o projeto para obter a lista de arquivos
+            project_files = scan_project()
+            
+            # Monta o prompt com contexto
+            prompt = f"Diretório atual: {context['project_dir']}\nArquivos do projeto:\n{project_files}\nComandos anteriores: {context['previous_commands'][-3:]}\nComando atual: {command}"
+            
+            # Chama a API do Claude
+            response = self.client.messages.create(
+                model="claude-3-7-sonnet-20250219",
+                max_tokens=1000,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            return response.content[0].text  # Ajuste conforme a estrutura da resposta
+        except self.AnthropicError as e:
+            return f"Erro ao processar o comando: {str(e)}"
+
+class OlhamaProvider(ModelProvider):
+    """Provedor de modelo para um modelo local a partir do Olhama."""
+    def process_command(self, command, context):
+        # Implementação fictícia para o modelo local
+        # Aqui você deve adicionar a lógica para processar o comando usando o modelo local do Olhama
+        return f"Resposta do modelo local para o comando: {command}"
 
 def execute_shell_command(command):
     """Executa um comando de shell na raiz do projeto."""
@@ -116,6 +127,17 @@ def apply_action(command, response):
         console.print(f"[green]Comando salvo em {user_file_path} e resposta salva em {assistant_file_path}![/green]")
 
 def main():
+    # Seleciona o provedor de modelo com base em uma variável de ambiente
+    provider_type = os.getenv("MODEL_PROVIDER", "anthropic")
+    if provider_type == "anthropic":
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        provider = AnthropicProvider(api_key)
+    elif provider_type == "olhama":
+        provider = OlhamaProvider()
+    else:
+        console.print("[red]Erro: Provedor de modelo desconhecido.[/red]")
+        sys.exit(1)
+
     console.print(Panel(Text(f"CLI Iterativa - Sessão: {session_name} - Digite 'sair' para encerrar", style="prompt"), title="Bem-vindo", subtitle="Início"))
     
     while True:
@@ -128,7 +150,7 @@ def main():
             
             # Processa o comando
             console.print(Panel(Text("Processando...", style="info"), title="Aguarde", subtitle="Processamento"))
-            response = process_command(command)
+            response = provider.process_command(command, context)
             
             # Exibe e aplica a resposta
             apply_action(command, response)

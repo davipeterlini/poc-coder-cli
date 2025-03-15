@@ -39,6 +39,8 @@
         return "\n".join(files)
     - Agora preciso criar uma estrutura de provedor ou seja quero rodar minha aplicação apontando para um modelo local a partir do olhama
       - Construção essa estrutura e classes para suportar isso
+    - Ajustes o aruqivo app.py criado para que esteja de acordo com o clean code e clean arquithecture
+      Se for necessário separar os arquivos e estrututrar o projeto usando a pasta XXXX já existente
 - 16/03/2025
     - Ao abrir o CLI a função - scan_project deve ser executada
     - Os comandos não estão sendo executados
