@@ -12,3 +12,10 @@
     - Crie o comando de rodar um prompt na API da anthropic e salvar os códigos gerados em arquivos
     - Tudo que está sendo criado pela IA está sendo armazenado a onde, pois não está aparecendo nada na raiz do meu dir
     - Não é só salvar no log é salvar na raiz do projeto os arquivos que forem sendo criados na CLI
+    - Coloque os arquivos dentro de uma pasta session/name 
+        on name é o nome gerado randomicamente
+
+- Deixe na sequencia, por exemplo os prompts: 0001_user.md e as respostas 0001_assistant.md
+Salve dentro de uma pasta session/Nome
+de o nome fictício 
+

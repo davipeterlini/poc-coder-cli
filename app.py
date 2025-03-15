@@ -1,5 +1,7 @@
 import os
 import sys
+import random
+import string
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
 from rich.console import Console
@@ -19,6 +21,11 @@ if not api_key:
 client = Anthropic(api_key=api_key)
 session = PromptSession(history=FileHistory(".cli_history"), multiline=False)
 context = {"project_dir": os.getcwd(), "previous_commands": []}  # Contexto persistente
+
+# Gerar um nome de sessão aleatório
+session_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+session_dir = os.path.join("session", session_name)
+os.makedirs(session_dir, exist_ok=True)
 
 def process_command(command):
     """Processa o comando do usuário e retorna a resposta da IA."""
@@ -54,14 +61,16 @@ def apply_action(response):
         with open(file_path, "w") as f:
             f.write(response)
         console.print(f"[green]Código salvo em {file_path}![/green]")
-
-def log_response(command, response):
-    """Salva o comando e a resposta da IA em um arquivo de log."""
-    with open("ia_responses.log", "a") as log_file:
-        log_file.write(f"Comando: {command}\nResposta: {response}\n\n")
+    else:
+        # Salvar a resposta em um arquivo na pasta da sessão
+        file_name = f"response_{len(context['previous_commands'])}.txt"
+        file_path = os.path.join(session_dir, file_name)
+        with open(file_path, "w") as f:
+            f.write(response)
+        console.print(f"[green]Resposta salva em {file_path}![/green]")
 
 def main():
-    console.print("[bold cyan]CLI Iterativa - Digite 'sair' para encerrar[/bold cyan]")
+    console.print(f"[bold cyan]CLI Iterativa - Sessão: {session_name} - Digite 'sair' para encerrar[/bold cyan]")
     
     while True:
         try:
@@ -77,9 +86,6 @@ def main():
             
             # Exibe e aplica a resposta
             apply_action(response)
-            
-            # Salva a resposta no log
-            log_response(command, response)
         
         except KeyboardInterrupt:
             console.print("[red]Interrompido pelo usuário. Encerrando...[/red]")

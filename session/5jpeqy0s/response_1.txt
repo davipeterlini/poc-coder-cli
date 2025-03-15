@@ -1,0 +1,35 @@
+# Criando uma Estrutura de Pastas para o POC Coder CLI
+
+Vou criar uma estrutura de pastas robusta para seu projeto de CLI. Essa estrutura seguirá as boas práticas para projetos Node.js/TypeScript e facilitará a manutenção e escalabilidade do seu código.
+
+```bash
+mkdir -p src/{commands,utils,services,config,types,templates,tests}
+mkdir -p docs
+mkdir -p .github/workflows
+touch README.md
+touch .gitignore
+touch package.json
+touch tsconfig.json
+touch src/index.ts
+```
+
+Essa estrutura inclui:
+
+1. `/src` - Código fonte principal
+   - `/commands` - Comandos da CLI
+   - `/utils` - Funções utilitárias
+   - `/services` - Serviços que a CLI irá consumir/oferecer
+   - `/config` - Arquivos de configuração
+   - `/types` - Definições de tipos TypeScript
+   - `/templates` - Templates para geração de código
+   - `/tests` - Testes unitários e de integração
+
+2. `/docs` - Documentação do projeto
+
+3. `/.github/workflows` - Configurações de CI/CD
+
+4. Arquivos de configuração na raiz do projeto
+
+Para executar esta estrutura, você pode copiar e colar o comando acima no seu terminal, ou se preferir, posso lhe mostrar como criar cada diretório individualmente.
+
+Essa estrutura é adequada para uma CLI robusta que pode crescer ao longo do tempo. O padrão é baseado em projetos CLI profissionais como o CLI do Angular, Vue ou Next.js.
