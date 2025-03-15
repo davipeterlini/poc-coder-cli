@@ -8,3 +8,4 @@
     - Gere o README para execução dessa aplicação
     - Crie um arquivo .env.local e outro de exemplo para commitar, nele coloque a chave da antrhopic
     - Faça com que a aplicação leia o arquivo .env, se for necessário instalar libs
+    - Atualize o readme com os comandos básicos para rodar a aplicação cli

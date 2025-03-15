@@ -30,10 +30,12 @@ Antes de executar a aplicação, certifique-se de ter os seguintes itens instala
 
 ## Configuração
 
-1. Substitua `"sua-chave-api-aqui"` pela sua chave de API do Claude no arquivo `app.py`:
-    ```python
-    client = Anthropic(api_key="sua-chave-api-aqui")
+1. Crie um arquivo `.env.local` na raiz do projeto e adicione sua chave de API do Anthropic:
+    ```sh
+    ANTHROPIC_API_KEY=sua-chave-api-aqui
     ```
+
+2. Substitua `"sua-chave-api-aqui"` pela sua chave de API do Claude no arquivo `.env.local`.
 
 ## Execução
 
@@ -53,6 +55,9 @@ python app.py
 /
 ├── app.py          # Código principal da aplicação
 ├── journey.md      # Anotações e perguntas sobre a aplicação
+├── .env.local      # Arquivo de configuração local com a chave da API
+├── .env.example    # Exemplo de arquivo de configuração
+├── requirements.txt # Arquivo de dependências
 └── README.md       # Este arquivo
 ```
 
