@@ -4,10 +4,19 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
 from rich.console import Console
 from anthropic import Anthropic, AnthropicError
+from dotenv import load_dotenv
+
+# Carregar variáveis de ambiente do arquivo .env.local
+load_dotenv('.env.local')
 
 # Configuração inicial
 console = Console()
-client = Anthropic(api_key="sua-chave-api-aqui")  # Substitua pela sua chave
+api_key = os.getenv("ANTHROPIC_API_KEY")
+if not api_key:
+    console.print("[red]Erro: Chave da API do Anthropic não encontrada. Verifique o arquivo .env.local[/red]")
+    sys.exit(1)
+
+client = Anthropic(api_key=api_key)
 session = PromptSession(history=FileHistory(".cli_history"), multiline=False)
 context = {"project_dir": os.getcwd(), "previous_commands": []}  # Contexto persistente
 

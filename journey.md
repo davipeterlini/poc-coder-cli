@@ -1,4 +1,10 @@
-- Qual a lib para fazer o modo iterativo do Claude Code 
-- Percebi que quando executo o claude code no terminal a parte iterativa é muito boa e intuitiva, existe alguma extensão ou lib que o claude code usa para deixar a estrutura iterativa no terminal da forma como é ? 
-- Como replicar o comportamento se possuo um ferramenta de cli parecida, porém feita em python 
-- 
+- 15/03/2025
+  - grok
+    - Qual a lib para fazer o modo iterativo do Claude Code 
+    - Percebi que quando executo o claude code no terminal a parte iterativa é muito boa e intuitiva, existe alguma extensão ou lib que o claude code usa para deixar a estrutura iterativa no terminal da forma como é ? 
+    - Como replicar o comportamento se possuo um ferramenta de cli parecida, porém feita em python 
+  - coder
+    - Crie um arquivo .gitignore e adicione os valores do coder
+    - Gere o README para execução dessa aplicação
+    - Crie um arquivo .env.local e outro de exemplo para commitar, nele coloque a chave da antrhopic
+    - Faça com que a aplicação leia o arquivo .env, se for necessário instalar libs
