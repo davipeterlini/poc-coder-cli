@@ -25,7 +25,7 @@ if not api_key:
 
 client = Anthropic(api_key=api_key)
 session = PromptSession(history=FileHistory(".cli_history"), multiline=False)
-context = {"project_dir": os.getcwd(), "previous_commands": []}  # Contexto persistente
+context = {"project_dir": os.getcwd(), "previous_commands": [], "files": []}  # Contexto persistente
 
 # Gerar um nome de sessão aleatório
 session_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
@@ -40,14 +40,25 @@ style = Style.from_dict({
     'info': 'bold yellow'
 })
 
+def scan_project():
+    """Escaneia o diretório do projeto e atualiza o contexto com a lista de arquivos."""
+    files = []
+    for root, _, filenames in os.walk(context["project_dir"]):
+        files.extend(os.path.join(root, f) for f in filenames)
+    context["files"] = files
+    return "\n".join(files)
+
 def process_command(command):
     """Processa o comando do usuário e retorna a resposta da IA."""
     try:
         # Adiciona o comando ao contexto
         context["previous_commands"].append(command)
         
+        # Escaneia o projeto para obter a lista de arquivos
+        project_files = scan_project()
+        
         # Monta o prompt com contexto
-        prompt = f"Diretório atual: {context['project_dir']}\nComandos anteriores: {context['previous_commands'][-3:]}\nComando atual: {command}"
+        prompt = f"Diretório atual: {context['project_dir']}\nArquivos do projeto:\n{project_files}\nComandos anteriores: {context['previous_commands'][-3:]}\nComando atual: {command}"
         
         # Chama a API do Claude
         response = client.messages.create(
