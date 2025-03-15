@@ -55,6 +55,11 @@ def apply_action(response):
             f.write(response)
         console.print(f"[green]Código salvo em {file_path}![/green]")
 
+def log_response(command, response):
+    """Salva o comando e a resposta da IA em um arquivo de log."""
+    with open("ia_responses.log", "a") as log_file:
+        log_file.write(f"Comando: {command}\nResposta: {response}\n\n")
+
 def main():
     console.print("[bold cyan]CLI Iterativa - Digite 'sair' para encerrar[/bold cyan]")
     
@@ -72,6 +77,9 @@ def main():
             
             # Exibe e aplica a resposta
             apply_action(response)
+            
+            # Salva a resposta no log
+            log_response(command, response)
         
         except KeyboardInterrupt:
             console.print("[red]Interrompido pelo usuário. Encerrando...[/red]")
