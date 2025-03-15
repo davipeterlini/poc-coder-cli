@@ -49,6 +49,11 @@ python app.py
 - Digite comandos na linha de comando interativa.
 - Para sair da aplicação, digite `sair`.
 
+### Comandos do Modo Iterativo
+
+- `sair`: Encerra a aplicação.
+- Qualquer outro comando será processado pela API do Claude e uma resposta será fornecida.
+
 ## Estrutura do Projeto
 
 ```
