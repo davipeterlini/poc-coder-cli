@@ -107,3 +107,9 @@ ehthumbs.db
 
 # Env
 .env.local
+
+# Python
+venv/
+
+# CLI
+.cli_history
