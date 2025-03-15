@@ -63,11 +63,20 @@ def apply_action(response):
         console.print(f"[green]Código salvo em {file_path}![/green]")
     else:
         # Salvar a resposta em um arquivo na pasta da sessão
-        file_name = f"response_{len(context['previous_commands'])}.txt"
-        file_path = os.path.join(session_dir, file_name)
-        with open(file_path, "w") as f:
-            f.write(response)
-        console.print(f"[green]Resposta salva em {file_path}![/green]")
+        file_index = len(context["previous_commands"])
+        user_file_name = f"{file_index:04d}_user.md"
+        assistant_file_name = f"{file_index:04d}_assistant.md"
+        
+        user_file_path = os.path.join(session_dir, user_file_name)
+        assistant_file_path = os.path.join(session_dir, assistant_file_name)
+        
+        with open(user_file_path, "w") as user_file:
+            user_file.write(command)
+        
+        with open(assistant_file_path, "w") as assistant_file:
+            assistant_file.write(response)
+        
+        console.print(f"[green]Comando salvo em {user_file_path} e resposta salva em {assistant_file_path}![/green]")
 
 def main():
     console.print(f"[bold cyan]CLI Iterativa - Sessão: {session_name} - Digite 'sair' para encerrar[/bold cyan]")

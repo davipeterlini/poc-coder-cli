@@ -14,8 +14,17 @@
     - Não é só salvar no log é salvar na raiz do projeto os arquivos que forem sendo criados na CLI
     - Coloque os arquivos dentro de uma pasta session/name 
         on name é o nome gerado randomicamente
+    - Salve tambem os prompts salvos no arquivo: .cli_history um em cada prompt
+    - o comando deve estar em um arquivo e a resposta em outro
+      os nomes dos arquivos são 0001_user.md para cada comando vai incrementando o numero 
+      e as respostas são 0001_assistants.md para cada comando vai incrementando o numero
 
-- Deixe na sequencia, por exemplo os prompts: 0001_user.md e as respostas 0001_assistant.md
-Salve dentro de uma pasta session/Nome
-de o nome fictício 
+      Ou seja, no final de 3 comandos teremos conforme abaixo dentro da sessão criada
+
+      0001_user.md
+      0001_assistants.md
+      0002_user.md
+      0002_assistants.md
+      0003_user.md
+      0003_assistants.md
 
