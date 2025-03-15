@@ -38,3 +38,5 @@
         context["files"] = files
         return "\n".join(files)
 
+    - Ao abrir o CLI a função - scan_project deve ser executada
+
