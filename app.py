@@ -46,7 +46,7 @@ def process_command(command):
     except AnthropicError as e:
         return f"Erro ao processar o comando: {str(e)}"
 
-def apply_action(response):
+def apply_action(command, response):
     """Aplica ações no sistema de arquivos com base na resposta da IA."""
     console.print(f"[yellow]Resposta da IA:[/yellow] {response}")
     if "editar arquivo" in response.lower():
@@ -62,7 +62,7 @@ def apply_action(response):
             f.write(response)
         console.print(f"[green]Código salvo em {file_path}![/green]")
     else:
-        # Salvar a resposta em um arquivo na pasta da sessão
+        # Salvar o comando e a resposta em arquivos na pasta da sessão
         file_index = len(context["previous_commands"])
         user_file_name = f"{file_index:04d}_user.md"
         assistant_file_name = f"{file_index:04d}_assistant.md"
@@ -94,7 +94,7 @@ def main():
             response = process_command(command)
             
             # Exibe e aplica a resposta
-            apply_action(response)
+            apply_action(command, response)
         
         except KeyboardInterrupt:
             console.print("[red]Interrompido pelo usuário. Encerrando...[/red]")
