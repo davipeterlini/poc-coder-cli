@@ -1,0 +1,4 @@
+- Qual a lib para fazer o modo iterativo do Claude Code 
+- Percebi que quando executo o claude code no terminal a parte iterativa é muito boa e intuitiva, existe alguma extensão ou lib que o claude code usa para deixar a estrutura iterativa no terminal da forma como é ? 
+- Como replicar o comportamento se possuo um ferramenta de cli parecida, porém feita em python 
+- 
