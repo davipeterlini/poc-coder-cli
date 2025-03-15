@@ -28,4 +28,13 @@
       0003_user.md
       0003_assistants.md
     - melhore a estrutura iterativa do terminal para que fique visualmente renderizada e mais bonita
+    - Agora preciso realmente executar na raiz da minha aplicação os comandos que a ia gerou
+      - Vi que o claude usa libs como BashTool e EditTool é possível usar isso nesse projeto ? 
+    - Adicione um scanner de diretórios para fornecer contexto automático
+      def scan_project():
+        files = []
+        for root, _, filenames in os.walk(context["project_dir"]):
+            files.extend(os.path.join(root, f) for f in filenames)
+        context["files"] = files
+        return "\n".join(files)
 

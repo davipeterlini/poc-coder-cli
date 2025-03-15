@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import string
+import subprocess
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
 from prompt_toolkit.styles import Style
@@ -58,6 +59,14 @@ def process_command(command):
     except AnthropicError as e:
         return f"Erro ao processar o comando: {str(e)}"
 
+def execute_shell_command(command):
+    """Executa um comando de shell na raiz do projeto."""
+    try:
+        result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=context["project_dir"])
+        return result.stdout + result.stderr
+    except Exception as e:
+        return f"Erro ao executar o comando: {str(e)}"
+
 def apply_action(command, response):
     """Aplica ações no sistema de arquivos com base na resposta da IA."""
     console.print(Panel(Text(response, style="response"), title="Resposta da IA", subtitle="Processado"))
@@ -73,6 +82,11 @@ def apply_action(command, response):
         with open(file_path, "w") as f:
             f.write(response)
         console.print(f"[green]Código salvo em {file_path}![/green]")
+    elif "executar comando" in response.lower():
+        # Executar um comando de shell
+        shell_command = Prompt.ask("Digite o comando de shell para executar", console=console)
+        shell_output = execute_shell_command(shell_command)
+        console.print(Panel(Text(shell_output, style="info"), title="Saída do Comando", subtitle="Executado"))
     else:
         # Salvar o comando e a resposta em arquivos na pasta da sessão
         file_index = len(context["previous_commands"])
