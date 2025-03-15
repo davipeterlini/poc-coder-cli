@@ -4,7 +4,11 @@ import random
 import string
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
+from prompt_toolkit.styles import Style
 from rich.console import Console
+from rich.prompt import Prompt
+from rich.panel import Panel
+from rich.text import Text
 from anthropic import Anthropic, AnthropicError
 from dotenv import load_dotenv
 
@@ -27,6 +31,14 @@ session_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=
 session_dir = os.path.join("session", session_name)
 os.makedirs(session_dir, exist_ok=True)
 
+# Estilo para o prompt
+style = Style.from_dict({
+    'prompt': 'bold cyan',
+    'response': 'bold green',
+    'error': 'bold red',
+    'info': 'bold yellow'
+})
+
 def process_command(command):
     """Processa o comando do usuário e retorna a resposta da IA."""
     try:
@@ -48,16 +60,16 @@ def process_command(command):
 
 def apply_action(command, response):
     """Aplica ações no sistema de arquivos com base na resposta da IA."""
-    console.print(f"[yellow]Resposta da IA:[/yellow] {response}")
+    console.print(Panel(Text(response, style="response"), title="Resposta da IA", subtitle="Processado"))
     if "editar arquivo" in response.lower():
         # Exemplo simplificado: editar um arquivo
-        file_path = input("Qual arquivo deseja editar? ")
+        file_path = Prompt.ask("Qual arquivo deseja editar?", console=console)
         with open(file_path, "a") as f:
             f.write("\n# Editado pela CLI\n")
         console.print(f"[green]Arquivo {file_path} editado![/green]")
     elif "salvar código" in response.lower():
         # Salvar código gerado em um arquivo
-        file_path = input("Digite o caminho do arquivo para salvar o código: ")
+        file_path = Prompt.ask("Digite o caminho do arquivo para salvar o código", console=console)
         with open(file_path, "w") as f:
             f.write(response)
         console.print(f"[green]Código salvo em {file_path}![/green]")
@@ -79,28 +91,28 @@ def apply_action(command, response):
         console.print(f"[green]Comando salvo em {user_file_path} e resposta salva em {assistant_file_path}![/green]")
 
 def main():
-    console.print(f"[bold cyan]CLI Iterativa - Sessão: {session_name} - Digite 'sair' para encerrar[/bold cyan]")
+    console.print(Panel(Text(f"CLI Iterativa - Sessão: {session_name} - Digite 'sair' para encerrar", style="prompt"), title="Bem-vindo", subtitle="Início"))
     
     while True:
         try:
             # Captura o comando do usuário
-            command = session.prompt(">> ")
+            command = session.prompt(">> ", style=style)
             if command.lower() == "sair":
-                console.print("[red]Encerrando...[/red]")
+                console.print(Panel(Text("Encerrando...", style="error"), title="Saindo", subtitle="Fim"))
                 break
             
             # Processa o comando
-            console.print("[italic]Processando...[/italic]")
+            console.print(Panel(Text("Processando...", style="info"), title="Aguarde", subtitle="Processamento"))
             response = process_command(command)
             
             # Exibe e aplica a resposta
             apply_action(command, response)
         
         except KeyboardInterrupt:
-            console.print("[red]Interrompido pelo usuário. Encerrando...[/red]")
+            console.print(Panel(Text("Interrompido pelo usuário. Encerrando...", style="error"), title="Interrompido", subtitle="Fim"))
             break
         except Exception as e:
-            console.print(f"[red]Erro inesperado: {str(e)}[/red]")
+            console.print(Panel(Text(f"Erro inesperado: {str(e)}", style="error"), title="Erro", subtitle="Exceção"))
 
 if __name__ == "__main__":
     main()
