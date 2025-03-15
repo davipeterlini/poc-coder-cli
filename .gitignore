@@ -104,3 +104,6 @@ ehthumbs.db
 # Coder 
 .coder/ 
 .coderignore
+
+# Env
+.env.local
