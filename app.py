@@ -48,6 +48,12 @@ def apply_action(response):
         with open(file_path, "a") as f:
             f.write("\n# Editado pela CLI\n")
         console.print(f"[green]Arquivo {file_path} editado![/green]")
+    elif "salvar código" in response.lower():
+        # Salvar código gerado em um arquivo
+        file_path = input("Digite o caminho do arquivo para salvar o código: ")
+        with open(file_path, "w") as f:
+            f.write(response)
+        console.print(f"[green]Código salvo em {file_path}![/green]")
 
 def main():
     console.print("[bold cyan]CLI Iterativa - Digite 'sair' para encerrar[/bold cyan]")
