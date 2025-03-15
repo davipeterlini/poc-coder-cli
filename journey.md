@@ -27,4 +27,5 @@
       0002_assistants.md
       0003_user.md
       0003_assistants.md
+    - melhore a estrutura iterativa do terminal para que fique visualmente renderizada e mais bonita
 
