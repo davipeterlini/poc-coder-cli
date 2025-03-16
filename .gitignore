@@ -114,3 +114,5 @@ venv/
 # CLI
 .cli_history
 session/
+
+__pycache__
