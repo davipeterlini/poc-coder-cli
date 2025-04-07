@@ -41,11 +41,8 @@
       - Construção essa estrutura e classes para suportar isso
     - Ajustes o aruqivo app.py a partir da estrutura da pasta src criada
       - Considere utilizar o clean code e clean arquithecture
-      
-
-
 - 16/03/2025
     - Ao abrir o CLI a função - scan_project deve ser executada
     - Os comandos não estão sendo executados
-
- 
+- 07/04/2025
+  - Verificar estrutura criada

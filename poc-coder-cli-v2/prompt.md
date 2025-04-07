@@ -1,0 +1,8 @@
+I want to build a CLI tool that acts as an AI coding assistant for developers, similar to Claude Code. It should be able to understand the local codebase, suggest changes, generate code, explain functions, and even automate small tasks like generating tests or adding comments.
+
+Return a list of all the core components the tool needs (e.g., command parser, code indexer, AI interface), a brief explanation of how they work together, and an example of how a developer would use each one in practice.
+Each component should be described with a proposed CLI command format, the expected input/output, and an example use case.
+
+Be mindful of performance issues when parsing large repositories. Avoid suggesting features that require full IDE integration. The tool must work via terminal and integrate with Git projects seamlessly. Output should be designed for UNIX-like environments.
+
+For context: I’m a senior backend dev working mostly with TypeScript/NestJS and Python. I love tools like GitHub Copilot and ChatGPT but often need more context awareness, especially in the terminal. I want something offline-first or that can connect to an API if needed. Ideally, it should read .gitignore, support monorepos, and cache results intelligently. I work a lot with microservices and sometimes jump between  projects. The tool should help accelerate onboarding in large codebases and assist in making informed, context-aware changes fast. I’d like the output to be helpful but minimal, like a really smart terminal buddy.

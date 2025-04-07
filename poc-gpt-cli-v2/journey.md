@@ -1,3 +1,9 @@
+- 07/04/2025
+  - Criação de Prompt - https://chatgpt.com/c/67f27ca5-fafc-8004-9e10-efd770c36b76
+  - Verificar estrutura criada
+
+
+
 codeai-cli/
 ├── codeai/
 │   ├── __init__.py
