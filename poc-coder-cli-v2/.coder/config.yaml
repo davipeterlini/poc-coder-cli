@@ -1,0 +1,49 @@
+coder:
+  persona: |
+    You are an expert coder.
+  model: flow-openai-gpt-4o
+  context:
+    mode: compact
+    scope: selected
+    selection:
+      model: flow-gemini-1.5-flash
+      step: 10
+      limit: 20
+
+# Configuration for the Coder (AI-First) Framework.
+
+# coder:
+#   persona: The persona description for the AI assistant.
+#     Default: "You are an expert coder."
+#
+#   model: The AI model for code generation and assistance.
+#     Options:
+#     - flow-openai-gpt-4o
+#     - flow-openai-gpt-4o-mini
+#     - flow-bedrock-claude-35-sonnet
+#     - flow-gemini-1.5-pro
+#     - flow-gemini-1.5-flash
+#
+#   context:
+#     mode: The level of detail for file contents.
+#       Options:
+#       - full: Includes complete file content.
+#       - compact: Includes a shrunk version of the file content (experimental).
+#     scope: The scope of files to include.
+#       Options:
+#       - all: Includes all files.
+#       - selected: Includes only selected files (experimental).
+#     selection:
+#       model: Model used to select files for context.
+#       step: Step for new file selection in each session run.
+#       limit: Limit for the number of selected files.
+
+# Context Mode and Scope Combinations:
+# - full/all: Includes all files with complete content. Best for smaller repositories. Supports ~10k lines of code on GPT-4o.
+# - full/selected: Includes selected files with full content.
+# - compact/all: Includes all files with shrunk content.
+# - compact/selected: Includes selected files with shrunk content. Supports >200k lines of code on GPT-4o/Gemini-Flash (experimental).
+
+# Choose based on your project's needs for precision and optimization.
+
+# For support, join our chat: https://chat.google.com/room/AAAAMgl_MV8?cls=7
