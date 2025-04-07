@@ -1,8 +1,3 @@
-Claro! Aqui está um `README.md` completo para o projeto **CodeAI CLI**, incluindo instruções de instalação, uso e configuração dos providers de IA:
-
----
-
-```markdown
 # 🤖 CodeAI CLI
 
 **CodeAI CLI** é um copiloto de código no terminal, feito em Python, com suporte a múltiplos provedores de modelos de linguagem (LLMs), incluindo OpenAI, Anthropic, e modelos locais via Ollama. A interface é 100% em linha de comando e permite executar interações com IA, edição de código, planejamento e ferramentas Bash integradas.
