@@ -1,0 +1,5 @@
+typer
+prompt_toolkit
+pyyaml
+openai
+requests
